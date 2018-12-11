@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>LIC - Lista Inteligente de Compras</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <link rel="stylesheet" type="text/css" href="../../css/bootstrap.css">
+        <link rel="stylesheet" type="text/css" href="../../css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="../../css/animate.css">
+        <link rel="stylesheet" type="text/css" href="../../css/animsition.min.css">
+        <link rel="stylesheet" type="text/css" href="../../css/select2.min.css">
+        <link rel="stylesheet" type="text/css" href="../../css/main.css">
+        <link rel="stylesheet" type="text/css" href="../../css/util.css">
+
+        <script src="../../js/angular.js"></script>
+        <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular-route.js"></script>
+        <script src="../../controllers/Config.js"></script>
+        <script src="../../controllers/Teste.js"></script>
+        <script src="carrinho-controller.js"></script>
+     
+
+    </head>
+    <!-- <body ng-app="myApp">
+         <div ng-controller="myController">Teste</div>
+     </body> -->
+
+    <body>
+    <body ng-app="myApp">
+
+        <div class="limiter" ng-controller="CarrinhoController" >
+            <div class="container-login100" >
+                <div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-50" style="width: 1000px;">
+                    <form class="login100-form validate-form">
+                        <span class="login100-form-title p-b-33">
+                            Minha Lista
+                        </span>
+
+                        <div class="form-row" style="margin-top: 20px">
+                            <div class="col-md-12" >
+                                <label style="font-weight: 600; line-height: 0.7;">Nome Lista</label>
+                                <input type="text" class="form-control" placeholder="Nome Lista">
+                            </div>
+                        </div>
+
+                        <div ng-repeat="teste in itemSelecionado">
+                            <div class="form-row" style="margin-top: 20px">
+                                <div class="col-md-5"  >
+                                    <img src="../../images/icons/18.png" alt="Smiley face" height="150" width="150">
+                                    <input type="checkbox"><br>
+
+                                </div>
+                            </div>
+
+                            <div class="col-md-7"  >
+
+                                <div class="col-md-2">
+                                    <label for="User" ng-model="teste.Nome"> Nome </label> 
+                                </div>
+                                <div class="col-md-2">
+                                    <label style="font-weight: 600; line-height: 0.7;">Quantidade</label>
+                                    <input type="text" class="form-control" placeholder="Quantidade" ng-model="teste.quantidade">
+                                </div>
+                                <div class="col-md-2" >
+                                    <label style="font-weight: 600; line-height: 0.7;">Preço</label>
+                                    <input type="text" class="form-control" placeholder="Preço" ng-model="teste.preco">
+                                </div>
+
+                            </div>
+                        </div>
+
+
+
+                        <div class="form-row" style="margin-top: 20px; ">
+                            <div class="col-md-6" style="float: right"  >
+                                <button class="login100-form-btn" style="height: 40px">
+                                    Salvar
+                                </button>
+                            </div> 
+
+                            <div class="col-md-6"  >
+                                <button class="login100-form-btn" style="height: 40px" ng-click="voltarLista()">
+                                    Cancelar
+                                </button>
+                            </div> 
+                        </div> 
+
+                    </form> 
+                </div>
+            </div>
+        </div> 
+
+    </body>
+</html>

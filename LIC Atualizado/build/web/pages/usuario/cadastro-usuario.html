@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>LIC - Lista Inteligente de Compras</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+        <script src="../../js/angular.js"></script>
+        <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular-route.js"></script>
+        <script src="../../controllers/Config.js"></script>
+        <script src="../../controllers/Teste.js"></script>
+        <script src="usuario-controller.js"></script>
+        <script src="../../js/sweetalert.js"></script>
+
+
+        <link rel="stylesheet" type="text/css" href="../../css/bootstrap.css">
+        <link rel="stylesheet" type="text/css" href="../../css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="../../css/animate.css">
+        <link rel="stylesheet" type="text/css" href="../../css/animsition.min.css">
+        <link rel="stylesheet" type="text/css" href="../../css/select2.min.css">
+        <link rel="stylesheet" type="text/css" href="../../css/main.css">
+        <link rel="stylesheet" type="text/css" href="../../css/util.css">
+        <link rel="stylesheet" type="text/css" href="../../fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" type="text/css" href="../../fonts/font-awesome-4.7.0/css/icon-font.min.css">
+        <link rel="stylesheet" type="text/css" href="../../css/sweetalert.css">
+
+
+
+    </head>
+
+    <body>
+
+    <body ng-app="myApp">        
+
+        <div class="limiter" ng-controller="UsuarioController"  >
+            <div class="container-login100" >
+                <div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-50" style="width: 1000px;">
+                    <form class="login100-form validate-form">
+                        <span class="login100-form-title p-b-33">
+                            Cadastro de Usuário
+                        </span>
+
+                        <div class="form-row" >
+
+                            <div class="col-md-6" style="margin-top: 5px">
+                                <label style="font-weight: 600; line-height: 0.7;">Nome</label>
+                                <input type="text" class="form-control" placeholder="Nome" ng-model="itemSelecionado.nome" maxlength="45">
+                            </div>                         
+
+                            <div class="col-md-6" style="margin-top: 5px">
+                                <label style="font-weight: 600; line-height: 0.7;">Login</label>
+                                <input type="text" class="form-control" placeholder="Login" ng-model="itemSelecionado.login" maxlength="45">
+                            </div>
+
+                        </div>                 
+
+                        <div class="form-row" >
+
+                            <div class="col-md-6" style="margin-top: 5px">
+                                <label style="font-weight: 600; line-height: 0.7;">Senha</label>
+                                <input type="password" class="form-control" placeholder="Senha" ng-model="itemSelecionado.senha" maxlength="45">
+                            </div>
+
+                            <div class="col-md-6" style="margin-top: 5px">
+                                <label style="font-weight: 600; line-height: 0.7;">Confirmação de Senha</label>
+                                <input type="password" class="form-control" placeholder="Confirmar Senha" ng-model="itemSelecionado.confirmarSenha" maxlength="45">
+                            </div>
+
+                        </div>
+
+                        <div class="form-row" >
+                            <div class="col-md-6" style="margin-top: 5px">
+                                <label style="font-weight: 600; line-height: 0.7;">E-mail</label>
+                                <input class="form-control" type="email" placeholder="Email" ng-model="itemSelecionado.email" maxlength="45">
+                            </div>
+
+                            <div class="col-md-6" style="margin-top: 5px">
+                                <label style="font-weight: 600; line-height: 0.7;">Telefone</label>
+                                <input class="form-control" type="tel" placeholder="Telefone" ng-model="itemSelecionado.telefone" maxlength="15"/>  
+                            </div>
+
+                        </div>                    
+
+                        <div class="form-row" style="margin-top: 5px">
+
+                            <div class="col-md-6" >
+                                <label style="font-weight: 600; line-height: 0.7;">Sexo</label>
+                                <select id="sexo" class="form-control" ng-model="itemSelecionado.sexo">
+                                    <option value=""> Sexo </option>    
+                                    <option value="M">Masculino</option> 
+                                    <option value="F">Feminino</option> 
+                                </select> 
+                            </div>
+
+                        </div>                    
+
+                        <div class="form-row" style="margin-top: 20px; ">
+                            <div class="col-md-12" style="float: right"  >
+                                <button class="login100-form-btn" style="height: 40px" ng-click="cadastrarUsuario()">
+                                    Cadastrar
+                                </button>
+                            </div> 
+                        </div> 
+
+
+                        <div class="form-row" style="margin-top: 10px; ">
+                            <div class="col-md-12"  >
+                                <button class="login100-form-btn" style="height: 40px" ng-click="cancelarCadastroUsuario()">
+                                    Cancelar
+                                </button>
+                            </div> 
+                        </div> 
+
+                    </form> 
+                </div>
+            </div>
+        </div> 
+
+    </body>
+</html>

@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+
+<div class="limiter" ng-controller="UsuarioController"  ng-init="consultarUsuarios()">
+
+
+    <div class="container-login100" ng-if="exibirEndereco">
+        <div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-50" style="width: 1000px;">
+            <form class="login100-form validate-form">
+                <span class="login100-form-title p-b-33">
+                    Endereço de {{itemSelecionado.nome}}
+                </span>
+
+                <div class="form-row" >
+                    <div class="col-md-6" style="margin-top: 5px">
+                        <label style="font-weight: 600; line-height: 0.7;">Cep</label>
+                        <input ng-blur="buscarCep(itemSelecionado.endereco.cep)" type="text" class="form-control" placeholder="Cep" ng-model="itemSelecionado.endereco.cep" ng-disabled="botaoClicadoEndereco == 'visualizar'" maxlength="9">
+                    </div>                         
+                    <div class="col-md-6" style="margin-top: 5px">
+                        <label style="font-weight: 600; line-height: 0.7;">Logradouro</label>
+                        <input type="text" class="form-control" placeholder="logradouro" ng-model="itemSelecionado.endereco.logradouro" ng-disabled="botaoClicadoEndereco == 'visualizar'" maxlength="45">
+                    </div>
+                </div>                 
+
+                <div class="form-row">
+
+                    <div class="col-md-6" style="margin-top: 5px">
+                        <label style="font-weight: 600; line-height: 0.7;">Complemento</label>
+                        <input type="text" class="form-control" placeholder="complemento" ng-model="itemSelecionado.endereco.complemento" ng-disabled="botaoClicadoEndereco == 'visualizar'" maxlength="45">
+                    </div>
+                    <div class="col-md-6" style="margin-top: 5px">
+                        <label style="font-weight: 600; line-height: 0.7;">Número</label>
+                        <input type="text" class="form-control" placeholder="Número" ng-model="itemSelecionado.endereco.numero" ng-disabled="botaoClicadoEndereco == 'visualizar'" maxlength="45">
+                    </div>
+
+                </div>
+
+                <div class="form-row" >
+                    <div class="col-md-6" style="margin-top: 5px" >
+                        <label style="font-weight: 600; line-height: 0.7;">Bairro</label>
+                        <input type="text" class="form-control" placeholder="Bairro" ng-model="itemSelecionado.endereco.bairro" ng-disabled="botaoClicadoEndereco == 'visualizar'" maxlength="45">
+                    </div>
+                    <div class="col-md-6" style="margin-top: 5px">
+                        <label style="font-weistyleght: 600; line-height: 0.7;">Cidade</label>
+                        <input type="text" class="form-control" placeholder="Cidade" ng-model="itemSelecionado.endereco.localidade" ng-disabled="botaoClicadoEndereco == 'visualizar'" maxlength="45">
+                    </div>
+
+                </div>
+
+                <div class="form-row" style="margin-top: 5px">
+                    <div class="col-md-6" >
+                        <label style="font-weight: 600; line-height: 0.7;">UF</label>
+                        <input type="text" class="form-control" placeholder="UF" ng-model="itemSelecionado.endereco.uf" ng-disabled="botaoClicadoEndereco == 'visualizar'" maxlength="45">
+                    </div>
+
+                </div>
+
+                <div class="form-row" style="margin-top: 10px;">
+                    <div class="col-md-4" style="float: right ;margin-top: 5px;" ng-if="botaoClicadoEndereco == 'visualizar' && !itemSelecionado.endereco.cep" >
+                        <button class="login100-form-btn" style="height: 40px" ng-click="incluirEnderecoUsuario(itemSelecionado)" >
+                            Incluir
+                        </button>
+                    </div> 
+                    <div class="col-md-4" style="float: right ;margin-top: 5px;" ng-if="botaoClicadoEndereco == 'visualizar' && itemSelecionado.endereco.cep" >
+                        <button class="login100-form-btn" style="height: 40px" ng-click="editarEnderecoUsuario(itemSelecionado.endereco)"  >
+                            Alterar
+                        </button>
+                    </div> 
+                    <div class="col-md-4" style="float: right ;margin-top: 5px;" ng-if="botaoClicadoEndereco == 'visualizar' && itemSelecionado.endereco.cep"  >
+                        <button class="login100-form-btn" style="height: 40px" ng-click="excluirEnderecoUsuario(itemSelecionado.endereco.idEndereco, itemSelecionado.id)">
+                            Excluir
+                        </button>
+                    </div> 
+                    <div class="col-md-4" style="float: right ;margin-top: 5px;" ng-if="botaoClicadoEndereco == 'visualizar'">
+                        <button class="login100-form-btn" style="height: 40px" ng-click="ativaDesativaEndereco();consultarUsuarios()">
+                            Voltar
+                        </button>
+                    </div> 
+                </div>
+
+                <div class="form-row" style="margin-top: 20px; ">
+                    <div class="col-md-6" style="float: right" ng-if="botaoClicadoEndereco != 'visualizar'" >
+                        <button class="login100-form-btn" style="height: 40px" ng-click="salvarEndereco()">
+                            Salvar
+                        </button>
+                    </div> 
+                    <div class="col-md-6" ng-if="botaoClicadoEndereco != 'visualizar'" >
+                        <button class="login100-form-btn" style="height: 40px" ng-click="ativaDesativaEndereco()" >
+                            Cancelar
+                        </button>
+                    </div> 
+                </div>
+
+            </form> 
+        </div>
+    </div>
+
+    <div class="container-login100" ng-if="!exibir && !exibirEndereco">
+        <div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-50" style="width: 1000px;">
+            <form class="login100-form validate-form">
+                <span class="login100-form-title p-b-33">
+                    Cadastro de Usuário
+                </span>
+
+                <div class="form-row" >
+                    <div class="col-md-6" style="margin-top: 5px">
+                        <label style="font-weight: 600; line-height: 0.7;">Nome</label>
+                        <input type="text" class="form-control" placeholder="Nome" ng-model="itemSelecionado.nome" ng-required="true" maxlength="45" ng-disabled="botaoClicado == 'visualizar'">
+                    </div>                         
+                    <div class="col-md-6" style="margin-top: 5px">
+                        <label style="font-weight: 600; line-height: 0.7;">Login</label>
+                        <input type="text" class="form-control" placeholder="Login" ng-model="itemSelecionado.login" ng-required="true" maxlength="45" ng-disabled="botaoClicado == 'visualizar'">
+                    </div>
+                </div>                 
+
+
+
+                <div class="form-row" >
+                    <div class="col-md-6" style="margin-top: 5px">
+                        <label style="font-weight: 600; line-height: 0.7;">Senha</label>
+                        <input type="password" class="form-control" placeholder="Senha" ng-model="itemSelecionado.senha" ng-required="true" maxlength="45" ng-disabled="botaoClicado == 'visualizar'">
+                    </div>
+                    <div class="col-md-6" style="margin-top: 5px">
+                        <label style="font-weight: 600; line-height: 0.7;">Confirmação de Senha</label>
+                        <input type="password" class="form-control" placeholder="Confirmar Senha" ng-model="itemSelecionado.confirmarSenha" ng-required="true" maxlength="45" ng-disabled="botaoClicado == 'visualizar'">
+                    </div>
+                </div>
+
+                <div class="form-row" >
+                    <div class="col-md-6" style="margin-top: 5px">
+                        <label style="font-weight: 600; line-height: 0.7;">E-mail</label>
+                        <input class="form-control" type="email" placeholder="Email" ng-model="itemSelecionado.email" ng-required="true" maxlength="45" ng-disabled="botaoClicado == 'visualizar'">
+                    </div>
+                    <div class="col-md-6" style="margin-top: 5px">
+                        <label style="font-weight: 600; line-height: 0.7;">Telefone</label>
+                        <input type="tel" class="form-control" placeholder="Telefone" ng-model="itemSelecionado.telefone" maxlength="15" ng-disabled="botaoClicado == 'visualizar'">
+                    </div>
+
+                </div>
+
+                <div class="form-row">
+
+                    <div class="col-md-6"  style="margin-top: 5px">
+                        <label style="font-weight: 600; line-height: 0.7;">Sexo</label>
+                        <select id="sexo" class="form-control" ng-model="itemSelecionado.sexo" ng-required="true" ng-disabled="botaoClicado == 'visualizar'">
+                            <option value=""> Sexo </option>    
+                            <option value="M">Masculino</option> 
+                            <option value="F">Feminino</option> 
+                        </select> 
+                    </div>
+
+                    <div class="col-md-6" style="margin-top: 5px">
+                        <label style="font-weight: 600; line-height: 0.7;">Tipo Usuário</label>
+                        <select id="tipoUsuario" class="form-control" ng-model="itemSelecionado.tipoUsuario" ng-required="true" ng-disabled="botaoClicado == 'visualizar'">
+                            <option value=""> Tipo Usuário </option>    
+                            <option value="Cliente">Cliente</option> 
+                            <option value="Estabelecimento">Estabelecimento</option> 
+                            <option value="Administrador">Administrador</option> 
+                        </select> 
+                    </div>
+
+
+                </div>                    
+
+
+                <div class="form-row" style="margin-top: 10px; ">
+                    <div class="col-md-4" style="float: right ;margin-top: 5px;"  >
+                        <button class="login100-form-btn" style="height: 40px" ng-click="editarUsuario(itemSelecionado)" ng-if="botaoClicado == 'visualizar'">
+                            Alterar
+                        </button>
+                    </div> 
+                    <div class="col-md-4" style="float: right ;margin-top: 5px;"  >
+                        <button class="login100-form-btn" style="height: 40px" ng-click="excluirUsuario(itemSelecionado.id)" ng-if="botaoClicado == 'visualizar'">
+                            Excluir
+                        </button>
+                    </div> 
+                    <div class="col-md-4" style="float: right ;margin-top: 5px;"  >
+                        <button class="login100-form-btn" style="height: 40px" ng-click="cancelarEdicao()" ng-if="botaoClicado == 'visualizar'">
+                            Voltar
+                        </button>
+                    </div> 
+
+                    <div class="col-md-6" style="float: right; margin-top: 5px;"  >
+                        <button class="login100-form-btn" style="height: 40px" ng-click="salvarUsuario()" ng-if="botaoClicado != 'visualizar'">
+                            Salvar
+                        </button>
+                    </div> 
+                    <div class="col-md-6" style="float: right; margin-top: 5px;" >
+                        <button class="login100-form-btn" style="height: 40px" ng-click="cancelarEdicao()" ng-if="botaoClicado != 'visualizar'">
+                            Cancelar
+                        </button>
+                    </div> 
+
+                </div> 
+
+            </form> 
+        </div>
+    </div>
+
+    <div  class="container-login100" ng-if="exibir">
+        <div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-50" style="width: 1000px;" >
+            <form class="login100-form validate-form">
+                <span class="login100-form-title p-b-33">
+                    Lista de Usuário
+                </span>
+
+                <div class="col-md-12" style="margin-top: 20px;"> 
+                    <table  class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col">Nome</th>
+                                <th scope="col">Login</th>
+                                <th scope="col"></th>
+                                <th scope="col"></th>
+                                <th scope="col"></th>
+                                <th scope="col"></th>
+
+                            </tr>
+                        </thead>
+                        <tbody >
+                            <tr ng-repeat="usuario in parametrosTabela" ng-click="SelecionarUsuario(usuario)">
+                                <td>{{usuario.nome}}</td>
+                                <td>{{usuario.login}}</td>
+                                <td style="width:  10px">
+                                    <input ng-click="ativaDesativaEndereco(usuario)" type=image src="images/icons/localizacao.svg" style="width:20px; height:20px" title="endereço"> 
+                                </td> 
+                                <td style="width:  10px">
+                                    <input ng-click="visualizarUsuario(usuario)" type=image src="images/icons/visualizar.svg" style="width:20px; height:20px" title="visualizar"> 
+                                </td> 
+                                <td style="width:  10px">
+                                    <input ng-click="editarUsuario(usuario)" type=image src="images/icons/editar.svg" style="width:20px; height:20px" title="editar" >
+                                </td>
+                                <td style="width:  10px">
+                                    <input ng-click="excluirUsuario(usuario.id)" type=image src="images/icons/lixo.svg" style="width:20px; height:20px" title="excluir"> 
+                                </td> 
+                            </tr> 
+                        </tbody>
+                    </table>
+                </div>
+
+                <div >
+                    <div class="col-md-4" style="margin-top: 1%;float: right" >
+                        <button class="login100-form-btn" ng-click="adicionarUsuario()">  
+                            Adicionar
+                        </button>
+                    </div>
+
+                </div>
+
+            </form> 
+        </div>
+    </div>
+
+
+
+
+</div> 

@@ -1,0 +1,109 @@
+<div class="limiter" ng-controller="ListaController" ng-init="ConsultaTipoUsuario();consultarListas();consultarSupermercados();">
+
+    <div class="container-login100" ng-if="!exibir" >
+        <div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-50" style="width: 1000px;">
+            <form class="login100-form validate-form">
+                <span class="login100-form-title p-b-33">
+                    Cadastro de Lista
+                </span>
+
+                <div class="form-row" style="margin-top: 20px">
+                    
+                    <div class="col-md-6" style="margin-top: 5px">
+                        <label style="font-weight: 600; line-height: 0.7;">Nome da Lista</label>
+                        <input type="text" class="form-control" placeholder="Nome da Lista" ng-model="itemSelecionado.nome" ng-required="true" maxlength="45">
+                    </div>
+
+                    <div class="col-md-6" style="margin-top: 5px" ng-if="itemSelecionado.DescricaoTipoUsuario == 'Administrador'">
+                        <label style="font-weight: 600; line-height: 0.7;">Estabelecimentos</label>
+                        <select  class="form-control" ng-required="true" ng-model="itemSelecionado.idSupermercado" ng-disabled="botaoClicado == 'visualizar'">
+                            <option ng-repeat="supermercado in supermercados" value="{{supermercado.id}}">{{supermercado.RazaoSocialSupermercado}}</option>
+                        </select> 
+                    </div>
+
+                </div>
+
+                <div class="form-row" style="margin-top: 20px; ">
+                    <div class="col-md-6" style="float: right"  >
+                        <button class="login100-form-btn" style="height: 40px; margin-top:5px;" ng-click="salvarLista()">
+                            Salvar
+                        </button>
+                    </div> 
+
+                    <div class="col-md-6"  >
+                        <button class="login100-form-btn" style="height: 40px; margin-top:5px;" ng-click="cancelarEdicao()">
+                            Cancelar
+                        </button>
+                    </div> 
+                </div> 
+            </form> 
+        </div>
+    </div>
+
+
+    <div class="container-login100" ng-if="exibir" >
+        <div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-50" style="width: 1000px;">
+            <form class="login100-form validate-form">
+                <span class="login100-form-title p-b-33">
+                    Minhas Listas
+                </span>
+
+                <div class="col-md-12" style="margin-top: 20px;"> 
+                    <table  class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col">Nome</th>
+                                <th scope="col"></th>
+                                <th scope="col"></th>
+                                <th scope="col"></th>
+
+                            </tr>
+                        </thead>
+                        <tbody >
+                            <tr ng-repeat="Lista in parametrosTabela" ng-click="selecionarLista(Lista)">
+                                <td>{{Lista.nome}}</td>
+                                <td style="width:  10px">
+                                    <a  href="#!adicionaritemlista">
+                                        <input ng-click="gerenciarLista(Lista)" type=image src="images/icons/gerenciar.svg" style="width:20px; height:20px" title="Gerenciar" > 
+                                    </a>
+                                </td>
+                                <td style="width:  10px">
+                                    <input ng-click="editarLista(Lista)" type=image src="images/icons/editar.svg" style="width:20px; height:20px" title="Editar" > 
+                                </td>
+                                <td style="width:  10px">
+                                    <input  ng-click="excluirLista(Lista.idLista)" type=image src="images/icons/lixo.svg" style="width:20px; height:20px" title="Excluir"> 
+                                </td> 
+                            </tr> 
+                        </tbody>
+                    </table>
+                </div>
+
+                <div>
+
+                    <div class="col-md-4" style="margin-top: 1%;float: right " >
+                        <button class="login100-form-btn" ng-click="incluirLista();">
+                            Adicionar
+                    </div>
+
+                    <div class="col-md-4" style="margin-top: 1%;float: right " >
+                        <a  href="#!adicionaritemlista">
+
+                        </a>
+                    </div>
+
+                </div>
+
+
+                <div class="form-row" style="margin-top: 20px">
+                    <div class="col-md-3">
+
+
+                    </div>
+
+                </div>
+
+            </form> 
+        </div>
+    </div>
+</div> 
+

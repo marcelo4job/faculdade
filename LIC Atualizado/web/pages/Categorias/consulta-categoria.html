@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+
+<div class="limiter" ng-controller="CategoriaController" ng-init="consultarCategorias()">
+
+    <div class="container-login100" ng-if="!exibir" >
+        <div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-50" style="width: 1000px;">
+            <form class="login100-form validate-form">
+                <span class="login100-form-title p-b-33">
+                    Cadastro de Categoria
+                </span>
+
+                <div class="form-row" style="margin-top: 20px">
+                    <div class="col-md-12" >
+                       <label style="font-weight: 600; line-height: 0.7;">Nome da Categoria</label>
+                        <input type="text" class="form-control" placeholder="Nome da Categoria" ng-model="itemSelecionado.nomeCategoria" ng-disabled="botaoClicado == 'visualizar'" ng-required="true" maxlength="45">
+                    </div>
+                </div>
+
+                <div class="form-row" style="margin-top: 20px; ">
+                    <div class="col-md-4" style="float: right ;margin-top: 5px;"  >
+                        <button class="login100-form-btn" style="height: 40px" ng-click="editarCategoria(itemSelecionado)" ng-if="botaoClicado == 'visualizar'">
+                            Alterar
+                        </button>
+                    </div> 
+                    <div class="col-md-4" style="float: right ;margin-top: 5px;"  >
+                        <button class="login100-form-btn" style="height: 40px" ng-click="excluirCategoria(itemSelecionado.id)"ng-if="botaoClicado == 'visualizar'">
+                            Excluir
+                        </button>
+                    </div> 
+                    <div class="col-md-4" style="float: right ;margin-top: 5px;"  >
+                        <button class="login100-form-btn" style="height: 40px" ng-click="cancelarEdicao()"ng-if="botaoClicado == 'visualizar'">
+                            Voltar
+                        </button>
+                    </div> 
+                    <div class="col-md-6" style="float: right ;margin-top: 5px;"  >
+                        <button class="login100-form-btn" style="height: 40px" ng-click="salvarCategoria()" ng-if="botaoClicado != 'visualizar'">
+                            Salvar
+                        </button>
+                    </div> 
+                    <div class="col-md-6" style="margin-top: 5px; " >
+                        <button class="login100-form-btn" style="height: 40px" ng-click="cancelarEdicao()" ng-if="botaoClicado != 'visualizar'">
+                            Cancelar
+                        </button>
+                    </div> 
+                </div> 
+            </form> 
+        </div>
+    </div>
+
+
+    <div class="container-login100" ng-if="exibir" >
+        <div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-50" style="width: 1000px;">
+            <form class="login100-form validate-form">
+                <span class="login100-form-title p-b-33">
+                    Lista de Categorias
+                </span>
+
+                <div class="col-md-12" style="margin-top: 20px;"> 
+                    <table  class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col">Nome</th>
+                                <th scope="col"></th>
+                                <th scope="col"></th>
+                                <th scope="col"></th>
+
+                            </tr>
+                        </thead>
+                        <tbody >
+                            <tr ng-repeat="categoria in parametrosTabela" ng-click="selecionarCategoria(categoria)">
+                                <td>{{categoria.nomeCategoria}}</td>
+                                <td style="width:  10px">
+                                    <input ng-click="visualizarCategoria(categoria)" type=image src="images/icons/visualizar.svg" style="width:20px; height:20px" title="visualizar"> 
+                                </td> 
+                                <td style="width:  10px">
+                                    <input ng-click="editarCategoria(categoria)" type=image src="images/icons/editar.svg" style="width:20px; height:20px" > 
+                                </td>
+                                <td style="width:  10px">
+                                    <input  ng-click="excluirCategoria(categoria.id)" type=image src="images/icons/lixo.svg" style="width:20px; height:20px" > 
+                                </td> 
+                            </tr> 
+                        </tbody>
+                    </table>
+                </div>
+
+                <div>
+
+                    <div class="col-md-4" style="margin-top: 1%;float: right " >
+                        <button class="login100-form-btn" ng-click="incluirCategoria();">
+                            Adicionar
+                    </div>
+
+                </div>
+
+
+                <div class="form-row" style="margin-top: 20px">
+                    <div class="col-md-3">
+
+
+                    </div>
+
+                </div>
+
+            </form> 
+        </div>
+    </div>
+</div> 

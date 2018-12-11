@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+
+<div class="limiter" ng-controller="SupermercadoController" ng-init="consultarSupermercados()" >
+
+    <div class="container-login100" ng-if="exibirEndereco">
+        <div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-50" style="width: 1000px;">
+            <form class="login100-form validate-form">
+                <span class="login100-form-title p-b-33">
+                    Endereço de {{itemSelecionado.nome}}
+                </span>
+
+                <div class="form-row" >
+                    <div class="col-md-6" style="margin-top: 5px">
+                        <label style="font-weight: 600; line-height: 0.7;">Cep</label>
+                        <input ng-blur="buscarCep(itemSelecionado.endereco.cep)" type="text" class="form-control" placeholder="Cep" ng-disabled="botaoClicadoEndereco == 'visualizar'" ng-required="true" ng-model="itemSelecionado.endereco.cep" maxlength="9">
+                    </div>                         
+                    <div class="col-md-6" style="margin-top: 5px">
+                        <label style="font-weight: 600; line-height: 0.7;">Logradouro</label>
+                        <input type="text" class="form-control" placeholder="Logradouro" ng-model="itemSelecionado.endereco.logradouro" ng-disabled="botaoClicadoEndereco == 'visualizar'" ng-required="true" maxlength="45">
+                    </div>
+                </div>                 
+
+                <div class="form-row">
+
+                    <div class="col-md-6" style="margin-top: 5px">
+                        <label style="font-weight: 600; line-height: 0.7;">Complemento</label>
+                        <input type="text" class="form-control" placeholder="Complemento" ng-model="itemSelecionado.endereco.complemento" ng-disabled="botaoClicadoEndereco == 'visualizar'" maxlength="45">
+                    </div>
+                    <div class="col-md-6" style="margin-top: 5px">
+                        <label style="font-weight: 600; line-height: 0.7;">Número</label>
+                        <input type="text" class="form-control" placeholder="Número" ng-model="itemSelecionado.endereco.numero" ng-disabled="botaoClicadoEndereco == 'visualizar'" maxlength="45">
+                    </div>
+
+                </div>
+
+                <div class="form-row" >
+                    <div class="col-md-4" style="margin-top: 5px" >
+                        <label style="font-weight: 600; line-height: 0.7;">Bairro</label>
+                        <input type="text" class="form-control" placeholder="Bairro" ng-model="itemSelecionado.endereco.bairro" ng-disabled="botaoClicadoEndereco == 'visualizar'" ng-required="true" maxlength="45">
+                    </div>
+                    <div class="col-md-4" style="margin-top: 5px">
+                        <label style="font-weistyleght: 600; line-height: 0.7;">Cidade</label>
+                        <input type="text" class="form-control" placeholder="Cidade" ng-model="itemSelecionado.endereco.localidade" ng-disabled="botaoClicadoEndereco == 'visualizar'" maxlength="45">
+                    </div>
+                    <div class="col-md-4" style="margin-top: 5px">
+                        <label style="font-weight: 600; line-height: 0.7;">UF</label>
+                        <input type="text" class="form-control" placeholder="UF" ng-model="itemSelecionado.endereco.uf" ng-disabled="botaoClicadoEndereco == 'visualizar'" maxlength="45">
+                    </div>
+                </div>
+
+
+                <div class="form-row" style="margin-top: 10px;">
+                    <div class="col-md-4" style="float: right ;margin-top: 5px;" ng-if="botaoClicadoEndereco == 'visualizar' && !itemSelecionado.endereco.cep" >
+                        <button class="login100-form-btn" style="height: 40px" ng-click="incluirEnderecoSupermercado()" >
+                            Incluir
+                        </button>
+                    </div> 
+                    <div class="col-md-4" style="float: right ;margin-top: 5px;" ng-if="botaoClicadoEndereco == 'visualizar' && itemSelecionado.endereco.cep" >
+                        <button class="login100-form-btn" style="height: 40px" ng-click="editarEnderecoSupermercado(itemSelecionado.endereco)" >
+                            Alterar
+                        </button>
+                    </div> 
+                    <div class="col-md-4" style="float: right ;margin-top: 5px;"  ng-if="botaoClicadoEndereco == 'visualizar' && itemSelecionado.endereco.cep">
+                        <button class="login100-form-btn" style="height: 40px" ng-click="excluirEnderecoSupermercado(itemSelecionado.endereco.idEndereco, itemSelecionado.id)" >
+                            Excluir
+                        </button>
+                    </div> 
+                    <div class="col-md-4" style="float: right ;margin-top: 5px;" ng-if="botaoClicadoEndereco == 'visualizar'" >
+                        <button class="login100-form-btn" style="height: 40px" ng-click="ativaDesativaEndereco();consultarSupermercados()">
+                            Voltar
+                        </button>
+                    </div> 
+
+                    <div class="col-md-6" style="float: right; margin-top: 5px;"  >
+                        <button class="login100-form-btn" style="height: 40px" ng-click="salvarEndereco()" ng-if="botaoClicadoEndereco != 'visualizar'">
+                            Salvar
+                        </button>
+                    </div> 
+                    <div class="col-md-6" style="float: right; margin-top: 5px;" >
+                        <button class="login100-form-btn" style="height: 40px" ng-click="cancelarEdicaoEndereco()" ng-if="botaoClicadoEndereco != 'visualizar'">
+                            Cancelar
+                        </button>
+                    </div>
+                </div> 
+
+            </form> 
+        </div>
+    </div>
+
+
+    <div class="container-login100" ng-if="!exibir && !exibirEndereco" >
+        <div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-50" style="width: 1000px;">
+            <form class="login100-form validate-form">
+                <span class="login100-form-title p-b-33">
+                    Cadastro de Supermercado
+                </span>
+
+
+                <div class="form-row" style="margin-top: 20px">
+                    <div class="col-md-12" >
+                        <input type="text" ng-blur="buscarCnpj(itemSelecionado.cnpjSupermercado)" class="form-control" placeholder="CNPJ" ng-disabled="botaoClicado == 'visualizar'" ng-model="itemSelecionado.cnpjSupermercado" ng-required="true" maxlength="20">
+                    </div>
+                </div>
+
+                <div class="form-row" style="margin-top: 20px">
+                    <div class="col-md-12" >
+                        <input type="text" class="form-control" placeholder="Razão Social" ng-disabled="botaoClicado == 'visualizar'" ng-model="itemSelecionado.RazaoSocialSupermercado" ng-required="true" maxlength="45">
+                    </div>
+                </div>
+
+                <div class="form-row" style="margin-top: 20px">
+                    <div class="col-md-12" >
+                        <input type="text" class="form-control" placeholder="Nome Fantasia" ng-disabled="botaoClicado == 'visualizar'" ng-model="itemSelecionado.NomeFantasiaSupermercado" maxlength="45">
+                    </div>
+                </div>
+
+                <div ng-if="botaoClicado == 'incluir'"> 
+                    <hr style="margin-top:30px">
+
+                    <input style="margin-bottom: 15px" type="checkbox" ng-model="itemSelecionado.selecionado" name="cadastroSupermercado" value="cadastroSupermercado"> Cadastrar Endereço
+
+                    <div class="form-row" >
+                        <div class="col-md-6" style="margin-top: 5px">
+                            <input type="text" class="form-control" placeholder="Cep" ng-disabled="true" ng-model="itemSelecionado.endereco.cep" maxlength="9">
+                        </div>                         
+                        <div class="col-md-6" style="margin-top: 5px">
+                            <input type="text" class="form-control" placeholder="Logradouro" ng-model="itemSelecionado.endereco.logradouro" ng-disabled="true" maxlength="45">
+                        </div>
+                    </div>                 
+
+                    <div class="form-row">
+                        <div class="col-md-6" style="margin-top: 5px">
+                            <input type="text" class="form-control" placeholder="Complemento" ng-model="itemSelecionado.endereco.complemento" ng-disabled="true" maxlength="45">
+                        </div>
+                        <div class="col-md-6" style="margin-top: 5px">
+                            <input type="text" class="form-control" placeholder="Número" ng-model="itemSelecionado.endereco.numero" ng-disabled="true" maxlength="45">
+                        </div>
+                    </div>
+
+                    <div class="form-row" >
+                        <div class="col-md-4" style="margin-top: 5px" >
+                            <input type="text" class="form-control" placeholder="Bairro" ng-model="itemSelecionado.endereco.bairro" ng-disabled="true" maxlength="45">
+                        </div>
+                        <div class="col-md-4" style="margin-top: 5px">
+                            <input type="text" class="form-control" placeholder="Cidade" ng-model="itemSelecionado.endereco.localidade" ng-disabled="true" maxlength="45">
+                        </div>
+                        <div class="col-md-4" style="margin-top: 5px">
+                            <input type="text" class="form-control" placeholder="UF" ng-model="itemSelecionado.endereco.uf" ng-disabled="true" maxlength="45">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row" style="margin-top: 20px; ">
+                    <div class="col-md-4" style="float: right ;margin-top: 5px;"  >
+                        <button class="login100-form-btn" style="height: 40px" ng-click="editarSupermercado(itemSelecionado)" ng-if="botaoClicado == 'visualizar'">
+                            Alterar
+                        </button>
+                    </div> 
+                    <div class="col-md-4" style="float: right ;margin-top: 5px;"  >
+                        <button class="login100-form-btn" style="height: 40px" ng-click="excluirSupermercado(itemSelecionado.id)"ng-if="botaoClicado == 'visualizar'">
+                            Excluir
+                        </button>
+                    </div> 
+                    <div class="col-md-4" style="float: right ;margin-top: 5px;"  >
+                        <button class="login100-form-btn" style="height: 40px" ng-click="cancelarEdicao()"ng-if="botaoClicado == 'visualizar'">
+                            Voltar
+                        </button>
+                    </div> 
+                    <div class="col-md-6" style="float: right ;margin-top: 5px;"  >
+                        <button class="login100-form-btn" style="height: 40px" ng-click="salvarSupermercado()" ng-if="botaoClicado != 'visualizar'">
+                            Salvar
+                        </button>
+                    </div> 
+                    <div class="col-md-6" style="margin-top: 5px; " >
+                        <button class="login100-form-btn" style="height: 40px" ng-click="cancelarEdicao()" ng-if="botaoClicado != 'visualizar'">
+                            Cancelar
+                        </button>
+                    </div> 
+                </div> 
+            </form> 
+        </div>
+    </div>
+
+    <div class="container-login100" ng-if="exibir" >
+        <div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-50" style="width: 1000px;">
+            <form class="login100-form validate-form">
+                <span class="login100-form-title p-b-33">
+                    Lista de Supermercados
+                </span>
+
+                <div class="col-md-12" style="margin-top: 20px;"> 
+                    <table  class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col">Razão Social</th>
+                                <th scope="col">Nome Fantasia</th>
+                                <th scope="col">CNPJ</th>
+                                <th scope="col"></th>
+                                <th scope="col"></th>
+                                <th scope="col"></th>
+                                <th scope="col"></th>
+
+                            </tr>
+                        </thead>
+                        <tbody >
+                            <tr ng-repeat="supermercado in parametrosTabela" ng-click="selecionarSupermercado(supermercado)">
+                                <td>{{supermercado.RazaoSocialSupermercado}}</td>
+                                <td>{{supermercado.NomeFantasiaSupermercado}}</td>
+                                <td>{{supermercado.cnpjSupermercado}}</td>
+                                <td style="width:  10px">
+                                    <input ng-click="ativaDesativaEndereco(supermercado)" type=image src="images/icons/localizacao.svg" style="width:20px; height:20px" title="Endereço"> 
+                                </td> 
+                                <td style="width:  10px">
+                                    <input ng-click="visualizarSupermercado(supermercado)" type=image src="images/icons/visualizar.svg" style="width:20px; height:20px" title="Visualizar"> 
+                                </td> 
+                                <td style="width:  10px">
+                                    <input ng-click="editarSupermercado(supermercado)" type=image src="images/icons/editar.svg" style="width:20px; height:20px" title="Alterar" > 
+                                </td>
+                                <td style="width:  10px">
+                                    <input  ng-click="excluirSupermercado(supermercado.id)" type=image src="images/icons/lixo.svg" style="width:20px; height:20px" title="Excluir" > 
+                                </td> 
+                            </tr> 
+                        </tbody>
+                    </table>
+                </div>
+
+                <div>
+
+                    <div class="col-md-4" style="margin-top: 1%;float: right " >
+                        <button class="login100-form-btn" ng-click="incluirSupermercado();">
+                            Adicionar
+                        </button>
+                    </div>
+
+                </div>
+
+                <div class="form-row" style="margin-top: 20px">
+                    <div class="col-md-3">
+
+
+                    </div>
+
+                </div>
+
+            </form> 
+        </div>
+    </div>
+
+</div>

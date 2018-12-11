@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+
+<div  class="limiter" ng-controller="ItemController" ng-init="consultarItens();consultarCategorias()" >
+
+    <div class="container-login100" ng-if="!exibir" >
+        <div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-50" style="width: 1000px;" >
+            <form class="login100-form validate-form">
+                <span class="login100-form-title p-b-33">
+                    Cadastro de Item
+                </span>
+
+                <div class="form-row" >
+                    <div class="col-md-12" style="margin-top: 5px">
+                        <label style="font-weight: 600; line-height: 0.7;">Nome</label>  
+                        <input ng-required="true" ng-model="itemSelecionado.nomeItem" type="text" class="form-control" placeholder="Nome do Item" maxlength="45" ng-disabled="botaoClicado == 'visualizar'">
+                    </div>                         
+
+                </div>                 
+
+                <div class="form-row">
+
+                    <div class="col-md-6" style="margin-top: 5px">
+                        <label style="font-weight: 600; line-height: 0.7;">Categoria</label>
+                        <select  class="form-control" ng-required="true" ng-model="itemSelecionado.categoria" ng-disabled="botaoClicado == 'visualizar'">
+                            <option ng-repeat="categoria in categorias" value="{{categoria.id}}">{{categoria.nomeCategoria}}</option>
+                        </select> 
+                    </div>
+                    <div class="col-md-6" style="margin-top: 5px">
+                        <label style="font-weight: 600; line-height: 0.7;">Preço</label>
+                        <input type="text" class="form-control" placeholder="preço" maxlength="45" ng-model="itemSelecionado.preco" ng-disabled="botaoClicado == 'visualizar'">
+                    </div>
+
+                </div>
+
+                <div class="form-row" >
+                    <!--   <div class="col-md-6" style="margin-top: 5px">
+                           Quantidade
+                           <input type="text" class="form-control" placeholder="Quantidade" ng-model="itemSelecionado.quantidade">
+                       </div>-->
+                    <div class="col-md-12" style="margin-top: 5px">
+                        <label style="font-weight: 600; line-height: 0.7;">Observações</label>
+                        <input type="text" class="form-control" placeholder="Observações" maxlength="100" ng-model="itemSelecionado.observacoes" ng-disabled="botaoClicado == 'visualizar'">
+                    </div>
+
+                </div>    
+
+                <div class="form-row" >
+
+                    <div class="col-md-6" style="margin-top: 5px">
+                        <label style="font-weight: 600; line-height: 0.7;">Imagem Item</label>
+                        <input type="file" accept="image/*" class="form-control" ng-model="itemSelecionado.imagem" ng-disabled="botaoClicado == 'visualizar'" onchange="angular.element(this).scope().adicionarArquivo(this)">
+                    </div>
+
+                </div>     
+
+                <div class="form-row" >
+
+                    <div class="col-md-6" style="margin-top: 10px" ng-if="itemSelecionado.imagem">
+                        <img ng-src="{{itemSelecionado.imagem}}"  style="width: 150px; height: 150px;border: groove;" />
+                    </div>
+                </div>   
+
+                <div class="form-row" >
+                    <div class="col-md-3" style="margin-top: 10px" ng-if="itemSelecionado.imagem">
+                        <button class="btn btn-danger" style="height: 40px" ng-click="limparImagem()" ng-disabled="botaoClicado == 'visualizar'">
+                            Limpar Imagem
+                        </button>
+
+                    </div>
+                </div>
+
+                <div class="form-row" style="margin-top: 10px; ">
+                    <div class="col-md-4" style="float: right ;margin-top: 5px;"  >
+                        <button class="login100-form-btn" style="height: 40px" ng-click="editarItem(itemSelecionado)" ng-if="botaoClicado == 'visualizar'">
+                            Alterar
+                        </button>
+                    </div> 
+                    <div class="col-md-4" style="float: right ;margin-top: 5px;"  >
+                        <button class="login100-form-btn" style="height: 40px" ng-click="excluirItem(itemSelecionado.id)"ng-if="botaoClicado == 'visualizar'">
+                            Excluir
+                        </button>
+                    </div> 
+                    <div class="col-md-4" style="float: right ;margin-top: 5px;"  >
+                        <button class="login100-form-btn" style="height: 40px" ng-click="cancelarEdicao()"ng-if="botaoClicado == 'visualizar'">
+                            Voltar
+                        </button>
+                    </div> 
+                    <div class="col-md-6" style="float: right ;margin-top: 5px;"  >
+                        <button class="login100-form-btn" style="height: 40px" ng-click="salvarItem()" ng-if="botaoClicado != 'visualizar'">
+                            Salvar
+                        </button>
+                    </div> 
+                    <div class="col-md-6" style="margin-top: 5px; " >
+                        <button class="login100-form-btn" style="height: 40px" ng-click="cancelarEdicao()" ng-if="botaoClicado != 'visualizar'">
+                            Cancelar
+                        </button>
+                    </div> 
+                </div> 
+        </div> 
+    </div> 
+
+
+    <div  class="container-login100" ng-if="exibir">
+        <div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-50" style="width: 1000px;" >
+            <form class="login100-form validate-form">
+                <span class="login100-form-title p-b-33">
+                    Lista de Itens
+                </span>
+
+                <div class="col-md-12" style="margin-top: 20px;"> 
+                    <table  class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col"></th>
+                                <th scope="col">Nome</th>
+                                <th scope="col"></th>
+                                <th scope="col"></th>
+                                <th scope="col"></th>
+
+                            </tr>
+                        </thead>
+                        <tbody >
+                            <tr ng-repeat="item in parametrosTabela" ng-click="SelecionarItem(item)">
+                                <td> <img ng-src="{{item.imagem}}" ng-if="item.imagem" style="width: 50px; height: 50px;" />
+                                </td>
+                                <td>{{item.nome}}</td>
+                                <td style="width:  10px">
+                                    <input ng-click="visualizarItem(item)" type=image src="images/icons/visualizar.svg" style="width:20px; height:20px" title="visualizar"> 
+                                </td> 
+                                <td style="width:  10px">
+                                    <input ng-click="editarItem(item)" type=image src="images/icons/editar.svg" style="width:20px; height:20px" title="editar" >
+                                </td>
+                                <td style="width:  10px">
+                                    <input ng-click="excluirItem(item.id)" type=image src="images/icons/lixo.svg" style="width:20px; height:20px" title="excluir"> 
+                                </td> 
+                            </tr> 
+                        </tbody>
+                    </table>
+                </div>
+
+                <div >
+                    <div class="col-md-4" style="margin-top: 1%;float: right" >
+                        <button class="login100-form-btn" ng-click="adicionarItem()">  
+                            Adicionar
+                        </button>
+                    </div>
+
+                </div>
+
+                <!--    <div class="form-row" style="margin-top: 20px">
+                       <div class="col-md-3">
+    
+    
+                       </div>
+    
+    
+    
+    
+    
+    
+                   </div> --> 
+
+                <!--   <div class="form-group" >
+                       <div class="row">
+                           <div class="col-sm-12">
+                               <div> 
+    
+                               </div>
+    
+                               <button class="login100-form-btn">
+                                   Entrar
+                               </button>
+    
+                           </div>
+                       </div>-->
+
+            </form> 
+        </div>
+    </div>
+
+
+</div> 

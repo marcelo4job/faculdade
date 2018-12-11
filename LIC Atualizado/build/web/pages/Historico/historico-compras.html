@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>LIC - Lista Inteligente de Compras</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <link rel="stylesheet" type="text/css" href="../../css/bootstrap.css">
+        <link rel="stylesheet" type="text/css" href="../../css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="../../css/animate.css">
+        <link rel="stylesheet" type="text/css" href="../../css/animsition.min.css">
+        <link rel="stylesheet" type="text/css" href="../../css/select2.min.css">
+        <link rel="stylesheet" type="text/css" href="../../css/main.css">
+        <link rel="stylesheet" type="text/css" href="../../css/util.css">
+
+        <script src="../../js/angular.js"></script>
+        <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular-route.js"></script>
+        <script src="../../controllers/Config.js"></script>
+        <script src="../../controllers/Teste.js"></script>
+        <script src="historico-controller.js"></script>
+        <!-- <link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+         <link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/icon-font.min.css"> -->
+
+    </head>
+    <!-- <body ng-app="myApp">
+         <div ng-controller="myController">Teste</div>
+     </body> -->
+
+    <body ng-app="myApp">
+
+        <div class="limiter" ng-controller="HistoricoController" >
+            <div class="container-login100" >
+                <div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-50" style="width: 1000px;">
+                    <form class="login100-form validate-form">
+                        <span class="login100-form-title p-b-33">
+                            Histórico de Compras
+                        </span>
+
+                        <div class="form-row" style="margin-top: 20px">
+                            <div class="col-md-12" >
+                                <input type="text" class="form-control" placeholder="Informe o local">
+                            </div>
+                        </div>
+
+
+                        <div class="form-row" style="margin-top: 20px; ">
+
+                            <div class="col-md-6" style="text-align:left">
+                               <label style="font-weight: 600; line-height: 0.7;">Data da Compra</label>
+                                <input type="text" id="User" name="Name" ng-required="true"/>
+                                <div class="form-row" style="margin-top: 20px">
+                                </div>
+                               <label style="font-weight: 600; line-height: 0.7;">Valor Total</label> 
+                                <input type="text" id="User" name="Name" ng-required = "true"/>
+                            </div>
+
+
+                            <div class="col-md-6"  >
+                                <button class="login100-form-btn" style="height: 40px">
+                                    Buscar
+                                </button>
+                            </div> 
+                            
+                            <div class="row" style="float: right">
+                                <div class="col-md-6">
+                                    <button class="login100-form-btn" ng-click="voltar()">
+                                        Voltar
+                                    </button>
+                                </div>
+                            </div>
+                            
+                        </div> 
+
+
+
+
+                    </form> 
+                </div>
+            </div>
+        </div> 
+
+    </body>
+</html>

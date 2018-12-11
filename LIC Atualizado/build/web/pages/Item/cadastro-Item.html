@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<div class="limiter" ng-controller="ItemController" ng-init="consultarCategorias()" >
+    <div class="container-login100" >
+        <div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-50" style="width: 1000px;">
+            <form class="login100-form validate-form">
+                <span class="login100-form-title p-b-33">
+                    Cadastro de Item
+                </span>
+
+                <div class="form-row" style="margin-top: 5px">
+                    <div class="col-md-12" >
+                        <label style="font-weight: 600; line-height: 0.7;">Nome</label>
+                        <input ng-model="itemSelecionado.nomeItem" type="text" class="form-control" placeholder="Nome do Item" maxlength="45">
+                    </div>                         
+
+                </div>                 
+
+                <div class="form-row" style="margin-top: 5px">
+
+                    <div class="col-md-6" >
+                        <label style="font-weight: 600; line-height: 0.7;">Categoria</label>
+                        <select  class="form-control" ng-required="true" ng-model="itemSelecionado.categoria" >
+                            <option ng-repeat="categoria in categorias" value="{{categoria.id}}">{{categoria.nomeCategoria}}</option>
+                        </select> 
+                    </div>
+                    <div class="col-md-6">
+                        <label style="font-weight: 600; line-height: 0.7;">Preço</label>
+                        <input type="text" class="form-control" placeholder="preço" maxlength="45" ng-model="itemSelecionado.preco">
+                    </div>
+
+                </div>
+
+                <div class="form-row" style="margin-top: 5px">
+                    <div class="col-md-6" >
+                        <label style="font-weight: 600; line-height: 0.7;">Quantidade</label>
+                        <input type="text" class="form-control" placeholder="Quantidade" ng-model="itemSelecionado.quantidade">
+                    </div>
+                    <div class="col-md-6" >
+                        <label style="font-weight: 600; line-height: 0.7;">Observações</label>
+                        <input type="text" class="form-control" placeholder="Observações" maxlength="100" ng-model="itemSelecionado.observacoes">
+                    </div>
+
+                </div>                
+
+                <div class="form-row" style="margin-top: 10px; ">
+
+                    <div class="col-md-6" style="float: right ;margin-top: 5px;"  >
+                        <button class="login100-form-btn" style="height: 40px" ng-click="salvarItem()">
+                            Salvar
+                        </button>
+                    </div> 
+                    <div class="col-md-6" style="margin-top: 5px; " >
+                        <a href="#!consultaitem" class="login100-form-btn" style="height: 40px" ng-click="cancelarEdicao()">
+                            Cancelar
+                        </a>
+                    </div> 
+                </div> 
+
+                <!--   <div class="form-row" style="margin-top: 10px; ">
+                     <div class="col-md-6"  >
+                         <button class="login100-form-btn" style="height: 40px">
+                             Carrinho
+                         </button>
+                     </div> 
+                 </div> -->
+
+                <!--   <div class="form-group" >
+                       <div class="row">
+                           <div class="col-sm-12">
+                               <div> 
+
+                               </div>
+
+
+
+                               <button class="login100-form-btn">
+                                   Entrar
+                               </button>
+
+                           </div>
+                 </body>
+</html>
+                       </div>-->
+
+            </form> 
+        </div>
+    </div>
+</div> 
+
+

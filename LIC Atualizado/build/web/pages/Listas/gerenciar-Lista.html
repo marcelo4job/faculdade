@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>LIC - Lista Inteligente de Compras</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    </head>
+
+    <body>
+    <body ng-app="myApp">
+
+        <div class="limiter" ng-controller="ListaController" ng-init="consultarItensLista();">
+            <div class="container-login100"  ng-if="exibirLista">
+                <div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-50" style="width: 1000px;">
+                    <form class="login100-form validate-form">
+                        <span class="login100-form-title p-b-33">
+                            Itens Lista
+                        </span>
+
+                        <div class="form-row" style="margin-top: 20px">
+                            <div class="col-md-12" style="text-align:center;">
+                                <table  class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Produto</th>
+                                            <th scope="col">Preço</th>
+                                            <th scope="col">Quantidade</th>
+                                            <th scope="col">Total Produto</th>
+                                            <th ng-if="parametrosTabelaItens.length > 0" scope="col"></th>
+                                            <th ng-if="parametrosTabelaItens.length > 0" style="width:  10px">
+                                                <input type="checkbox" ng-click="calcularValorTotalTodos(selecionados)" ng-model="selecionados"/>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                        <tr ng-repeat="item in parametrosTabelaItens" ng-click="selecionarLista(item)">
+                                            <td>{{item.nome}}</td> 
+                                            <td><input style="text-align: center" type="number" min="0" step="any"  ng-change="calcularPrecoItem(item)" ng-model="item.preco" /></td>
+                                            <td><input style="text-align: center" type="number" min="0" value="0" ng-change="calcularPrecoItem(item)" ng-model="item.quantidade" /></td>
+                                            <td>R$ {{item.totalProduto}}</td>
+                                            <td style="width:  10px">
+                                                <input  ng-click="excluirItemLista(item)" type=image src="images/icons/lixo.svg" style="width:20px; height:20px" title="Excluir"> 
+                                            </td> 
+                                            <td style="width:  10px">
+                                                <input type="checkbox" ng-change="calcularValorTotal()" ng-model="item.selecionado" value="false" id="slideTwo" name="check"/>
+                                            </td>  
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+
+                            </div>
+                        </div>
+
+
+
+                        <div class="form-row" style="margin-top: 20px; ">
+                            <div class="col-md-6" style="float: right"  >
+                                <button class="login100-form-btn" style="height: 40px; margin-top:5px;" ng-click="salvarListaItem()">
+                                    Salvar Lista
+                                </button>
+
+                            </div> 
+
+                            <div class="col-md-6" style="float: right;"  >
+                                <button class="login100-form-btn" style="height: 40px; margin-top:5px;" ng-click="exibirListaItem()">
+                                    Adicionar Item
+                                </button>
+                            </div> 
+
+                        </div> 
+
+
+
+                    </form> 
+
+                    <div class="form-row">
+                        <div class="col-md-12" style="border-color: #343a40;background: #bad8e1;margin-top: 15px">
+                            <table  class="table">
+                                <tbody >
+                                    <tr >
+                                        <td>
+                                            R$ {{PrecoTotalLista}}  <br>
+                                        </td>  
+                                    </tr> 
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+
+            <!-- RENAN TEST -->
+            <div class="container-login100" ng-if="!exibirLista">
+                <div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-50"  style="width: 1000px;">
+                    <form class="login100-form validate-form">
+                        <span class="login100-form-title p-b-33">
+                            Adicionar Item
+                        </span>
+
+
+                        <div class="form-row" style="margin-top: 20px">
+                            <div class="col-md-12" >
+                                <label style="font-weight: 600; line-height: 0.7;">Nome</label>
+                                <select  class="form-control" placeholder="Informe o nome do Produto" ng-model="produto.nome" ng-required="true" maxlength="45">
+                                    <option ng-repeat="item in itens" value="{{item.id}}">{{item.nome}}</option>
+                                </select> 
+                            </div>
+<!--<label style="font-weight: 600; line-height: 0.7;">Nome</label>
+                            <input type="text" class="form-control" list="produtos" placeholder="Informe o nome do Produto" ng-model="produto.nome" ng-required="true" maxlength="45"> -->
+                       
+                        </div>
+
+                        <div class="form-row" style="margin-top: 20px">
+                            <div class="col-md-6" >
+                                <label style="font-weight: 600; line-height: 0.7;">Preço</label>
+                                <input type="number" class="form-control" placeholder="Preço" ng-change="calcularPrecoItem(produto)" ng-model="produto.preco" ng-required="true" maxlength="11">
+                            </div>
+
+                            <div class="col-md-6" >
+                                <label style="font-weight: 600; line-height: 0.7;">Quantidade</label>
+                                <input type="number" class="form-control" placeholder="Quantidade" ng-change="calcularPrecoItem(produto)" ng-model="produto.quantidade" ng-required="true" maxlength="11">
+                            </div>
+                        </div>
+
+                        <div class="form-row" style="margin-top: 20px; ">
+                            <div class="col-md-6" style="float: right"  >
+                                <button class="login100-form-btn" style="height: 40px; margin-top:5px;" ng-click="incluirItem(produto)">
+                                    Salvar
+                                </button>
+                            </div> 
+
+                            <div class="col-md-6" style="float: right"  >
+                                <button class="login100-form-btn" style="height: 40px; margin-top:5px;" ng-click="exibirListaItem()">
+                                    Fechar
+                                </button>
+                            </div> 
+                        </div>
+
+                        <!--<div class="form-row" style="margin-top: 20px; ">
+                            <div class="col-md-12" style="float: right"  >
+                                <button class="login100-form-btn" data-toggle="modal" data-target="#myModal" style="height: 40px;width: 200px;float: right;">
+                                    Adicionar
+                                </button>
+                            </div> 
+                        -->
+                    </form> 
+                </div>
+            </div> 
+
+
+
+
+        </div> 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <!-- Modal -->
+        <div class="modal fade" id="myModal" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+
+                        <h4 class="modal-title">Novo Item</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="form-group">
+                                <label for="recipient-name" class="col-form-label">Digite o Nome do Produto</label>
+                                <input ng-model="produto.nome" list="produtos" name="produto" style="    display: block;width: 100%;padding: .375rem .75rem;font-size: 1rem;
+                                       line-height: 1.5;
+                                       color: #495057;
+                                       background-color: #fff;
+                                       background-clip: padding-box;
+                                       border: 1px solid #ced4da;
+                                       border-radius: .25rem;
+                                       transition: border-color .15s;">
+                                <datalist id="produtos" class="col-form-label">
+                                    <!--<option ng-repeat="item in nome" value="{{item.Nome}}">{{item.Nome}}</option>-->
+                                </datalist>
+                                <!--<label for="recipient-name" class="col-form-label">Digite o Nome do Produto</label>
+                                <input type="text" class="form-control" id="recipient-name">-->
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label for="recipient-name" class="col-form-label">Quantidade</label>
+                                    <input ng-model="produto.quantidade" type="text" class="form-control">
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label for="recipient-name" class="col-form-label">Preço</label>
+                                    <input ng-model="produto.preco" type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="recipient-name" class="col-form-label">Digite o Nome do Produto</label>
+                                <input ng-model="produto.nome" list="produtos" name="produto" style="    display: block;width: 100%;padding: .375rem .75rem;font-size: 1rem;
+                                       line-height: 1.5;
+                                       color: #495057;
+                                       background-color: #fff;
+                                       background-clip: padding-box;
+                                       border: 1px solid #ced4da;
+                                       border-radius: .25rem;
+                                       transition: border-color .15s;">
+                                <datalist id="produtos" class="col-form-label">
+                                    <!--<option ng-repeat="item in nome" value="{{item.Nome}}">{{item.Nome}}</option>-->
+                                </datalist>
+                                <!--<label for="recipient-name" class="col-form-label">Digite o Nome do Produto</label>
+                                <input type="text" class="form-control" id="recipient-name">-->
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label for="recipient-name" class="col-form-label">Quantidade</label>
+                                    <input ng-model="produto.quantidade" type="text" class="form-control">
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label for="recipient-name" class="col-form-label">Preço</label>
+                                    <input ng-model="produto.preco" type="text" class="form-control">
+                                </div>
+                            </div>
+
+
+                        </form>
+                    </div>
+                    <button id="goAngular2" style="display: none" ng-click="goAngular()"></button>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" ng-click="incluirItem(produto)">Salvar</button>
+                        <button type="button" class="btn btn-secondary" ng-click="limparProduto()" data-dismiss="modal">Fechar</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+        <!-- <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+             <div class="modal-dialog" role="document">
+                 <div class="modal-content">
+                     <div class="modal-header">
+                         <h5 class="modal-title" id="exampleModalLabel">Novo Item</h5>
+                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                             <span aria-hidden="true">&times;</span>
+                         </button>
+                     </div>
+                     
+                     <div class="modal-body">
+                         <form>
+                             <div class="form-group">
+                                 <label for="recipient-name" class="col-form-label">Digite o Nome do Produto</label>
+                                 <input type="text" class="form-control" id="recipient-name">
+                             </div>
+    
+                             <div class="col-md-12">
+                                 <div class="col-md-6">
+                                     <label for="recipient-name" class="col-form-label">Quantidade</label>
+                                     <input type="text" class="form-control" id="recipient-name">
+                                 </div>
+    
+                                 <div class="col-md-6">
+                                     <label for="recipient-name" class="col-form-label">Preço</label>
+                                     <input type="text" class="form-control" id="recipient-name">
+                                 </div>
+                             </div>
+    
+    
+                         </form>
+                     </div>
+                     <div class="modal-footer">
+                         <button type="button" class="btn btn-primary">Salvar</button>
+                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                     </div>
+                 </div>
+             </div>
+         </div>-->
+
+
+    </body>
+</html>

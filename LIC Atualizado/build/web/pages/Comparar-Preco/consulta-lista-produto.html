@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<style>
+    #markerWithExternalCss {
+        background-image: url('images/icons/place.svg');
+        background-size: cover;
+        width: 30px;
+        height: 30px;
+        cursor: pointer;
+    }
+
+    /*Example 2, most of the CSS is set by JS*/
+    .marker {
+        display: block;
+        border: none;
+        cursor: pointer;
+        padding: 0;
+    }
+</style>
+
+
+<div  class="limiter" ng-controller="CompararValoresController" ng-init="consultarItens();consultarCategorias()" >
+
+    <div class="container-login100" ng-if="!exibir && !exibirProduto && !exibirLista" >
+        <div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-50" style="width: 1000px; margin-top: 30px;" >
+
+            <span class="login100-form-title p-b-33" style="margin-top: 30px;">
+                Comparar Valores - Produtos/Listas
+            </span>
+
+            <div class="jumbotron" style="background-color: white; float:left; width:40%; height: 40%;">
+
+                <div style="text-align: center">
+                    <img src="images/icons/product.svg" style="width:50%; height:50%" title="Lista" >    
+                </div>
+
+                <div class="form-row" style="margin-top: 20px; ">
+                    <div class="col-md-12" style="float: right"  >
+                        <button class="login100-form-btn" style="height: 40px" ng-click="pesquisarProduto()">
+                            Pesquisar por Produto
+                        </button>
+                    </div> 
+                </div>
+
+            </div>
+
+            <div class="jumbotron" style="background-color: white; float:right; width:40%; height: 40%;">
+
+                <div style="text-align: center">
+                    <img src="images/icons/listWhite.svg" style="width:50%; height:50%;" title="Lista" >
+                </div>
+
+                <div class="form-row" style="margin-top: 20px; ">
+                    <div class="col-md-12" style="float: right"  >
+                        <button class="login100-form-btn" style="height: 40px" ng-click="pesquisarLista()">
+                            Pesquisar por Lista
+                        </button>
+                    </div> 
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+
+    <div  class="container-login100" ng-if="!exibir && exibirProduto && !exibirLista">
+        <div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-50" style="width: 1000px;" ng-init="consultarItensLista();iniciarMapa()">
+            <form class="login100-form validate-form">
+                <span class="login100-form-title p-b-33">
+                    Pesquisar Produto
+                </span>
+
+                <div class="form-row" style="margin-top: 20px">
+                    <div class="col-md-12" >
+                        <label style="font-weight: 600; line-height: 0.7;">Nome</label>
+                        <select  class="form-control" placeholder="Informe o nome do Produto" ng-model="itemSelecionado.produto" ng-required="true" maxlength="45">
+                            <option ng-repeat="item in itens" value="{{item.id}}">{{item.nome}}</option>
+                        </select>   
+                    </div>
+                    <div class="col-md-6" style="float: right; height: 40px; margin-top: 10px;"  >
+                        <button class="login100-form-btn" style="height: 35px" ng-click="pesquisarmelhorProduto(itemSelecionado.produto)">
+                            Pesquisar
+                        </button>
+                    </div> 
+                    <div class="col-md-6" style="float: right; height: 40px; margin-top: 10px;"  >
+                        <button class="login100-form-btn" style="height: 35px" ng-click="cancelarEdicaoProduto()">
+                            Cancelar
+                        </button>
+                    </div> 
+
+                    <div id="map" class="col-md-12" style="margin-top: 10px;height: 400px"></div>
+
+                </div>
+            </form> 
+        </div>
+    </div>
+
+    <div  class="container-login100" ng-if="!exibir && !exibirProduto && exibirLista" ng-init="consultarListas()">
+        <div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-50" style="width: 1000px;" >
+            <form class="login100-form validate-form">
+                <span class="login100-form-title p-b-33">
+                    Pesquisar Lista
+                </span>
+
+                <div class="form-row" style="margin-top: 20px">
+
+                    <div class="col-md-12" style="margin-top: 5px">
+                        <label style="font-weight: 600; line-height: 0.7;">Lista</label>
+                        <select  class="form-control" ng-required="true" ng-model="itemSelecionado.lista">
+                            <option ng-repeat="lista in listas" value="{{lista.idLista}}">{{lista.nome}}</option>
+                        </select> 
+                    </div>
+
+                    <div class="col-md-6" style="float: right; height: 40px; margin-top: 30px;"  >
+                        <button class="login100-form-btn" style="height: 35px" ng-click="salvarCategoria()">
+                            Pesquisar
+                        </button>
+                    </div> 
+                    <div class="col-md-6" style="float: right; height: 40px; margin-top: 30px;"  >
+                        <button class="login100-form-btn" style="height: 35px" ng-click="cancelarEdicaoLista()">
+                            Cancelar
+                        </button>
+                    </div> 
+                </div>
+            </form> 
+        </div>
+    </div>
+
+
+</div> 
